@@ -38,3 +38,5 @@ $password = "";
 // DB name
 $dbname = "";
 ```
+
+Please, keep in mind I am not webdev and this is my second work with web development, so bugs may appear.
