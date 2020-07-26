@@ -40,8 +40,7 @@ function toCommunityID($id)
 		<h1 class="title"><a href="index.php">CHAT LOG</a></h1>
 
 		<div class="searchBox">
-			<form class="example" action="index.php" method="post">
-				<input class="searchInput" id="search" name="search" style="color:white" type="text" placeholder="Search...">
+			<form class="example" action="" method="post"><input class="searchInput" id="search" name="search" style="color:white" type="text" placeholder="Search...">
 				<button class="searchButton" href="#">
 					<i class="fas fa-search"></i>
 				</button>
@@ -59,9 +58,9 @@ function toCommunityID($id)
 			</thead>
 			<tbody>
 				<?php
-					$search = $_POST['search'];
+					isset($_POST['search']) ? $search = $_POST['search'] : $search = "";
 
-					if (strlen($search) > 0)
+					if (strlen($search) >  0)
 					{
 						$search = mysqli_real_escape_string($conn, $search);
 						$sql = "SELECT * FROM chat_log WHERE CONCAT(date, steamid, name, message) LIKE '%$search%' ORDER BY id DESC";
@@ -72,7 +71,7 @@ function toCommunityID($id)
 					{
 						//Messages per page
 						$mpp = 10;
-
+						
 						isset($_GET['page']) ? $page = $_GET['page'] : $page = 0;
 
 						if ($page > 1) {
@@ -83,23 +82,26 @@ function toCommunityID($id)
 
 						$numRows = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM chat_log"));
 
-						$totalPages = $numRows / $mpp;
 
 						$result = mysqli_query($conn, "SELECT * FROM chat_log ORDER BY id DESC LIMIT $start, $mpp");
-					}
 
-					if (!is_int($totalPages))
-					{
-						$totalPages = $totalPages +1;
-					}
+						//Count total pages
+						$totalPages = $numRows / $mpp;
 
-					if ($_GET['page'] == 0)
-					{
-						echo "<div class=\"pagination\">Showing page 1 of " . intval($totalPages) . "</div>";
-					}
-					else 
-					{
-						echo "<div class=\"pagination\">Showing page " . $_GET['page'] . " of " . intval($totalPages) . "</div>";
+						if (!is_int($totalPages))
+						{
+							$totalPages = $totalPages +1;
+						}
+
+						if ($page == 0)
+						{
+							echo "<div class=\"pagination\">Showing page 1 of " . intval($totalPages) . "</div>";
+						}
+
+						else 
+						{
+							echo "<div class=\"pagination\">Showing page " . $_GET['page'] . " of " . intval($totalPages) . "</div>";
+						}
 					}
 
 					if ($result->num_rows > 0)
