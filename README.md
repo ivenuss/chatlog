@@ -1,8 +1,8 @@
 # Chat Log
 
-![GitHub repo size](https://img.shields.io/github/repo-size/ivenuss/chatlog) ![GitHub last commit](https://img.shields.io/github/last-commit/ivenuss/chatlog)
+![GitHub All Releases](https://img.shields.io/github/downloads/ivenuss/chatlog/total) ![GitHub last commit](https://img.shields.io/github/last-commit/ivenuss/chatlog) ![GitHub repo size](https://img.shields.io/github/repo-size/ivenuss/chatlog) 
 
-## Descriptiom
+## Description
 Saves all posted user messages in database.
 
 ## Database preview
