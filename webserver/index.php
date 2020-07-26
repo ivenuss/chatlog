@@ -89,6 +89,8 @@ function toCommunityID($id)
 						//Count total pages
 						$totalPages = $numRows / $mpp;
 
+						$GLOBALS['totalPages'];
+
 						if (!is_int($totalPages))
 						{
 							$totalPages = $totalPages +1;
@@ -137,9 +139,20 @@ function toCommunityID($id)
 					//Max pages ($totalPages = unlimited)
 					$maxPages = 10;
 
-					for ($i = 1; $i <= $maxPages; $i++)
+					if ($totalPages > $maxPages)
 					{
-						echo "<a class='letter' href='?page=$i'>&nbsp;$i</a>";
+						for ($i = 1; $i <= $maxPages; $i++)
+						{
+							echo "<a class='letter' href='?page=$i'>&nbsp;$i</a>";
+						}
+					}
+
+					else
+					{
+						for ($i = 1; $i <= $totalPages; $i++)
+						{
+							echo "<a class='letter' href='?page=$i'>&nbsp;$i</a>";
+						}
 					}
 				}
 			?>
