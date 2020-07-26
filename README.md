@@ -11,7 +11,8 @@ Saves all posted user messages in database.
 
 ![ddisp](https://i.imgur.com/cdUKhv4.png)
 
-## Database connection
+## Installation:
+connect to your mysql in ``databases.cfg``
 ```sh
 "chatlog"
 {
@@ -21,4 +22,19 @@ Saves all posted user messages in database.
     "user"                          ""
     "pass"                          ""
 }
+```
+
+connect to your mysql in ``database.php``
+```sh
+// DB hostname
+$servername = "localhost";
+
+// DB username
+$username = "";
+
+// DB password
+$password = "";
+
+// DB name
+$dbname = "";
 ```
