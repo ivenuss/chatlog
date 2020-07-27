@@ -1,16 +1,30 @@
 #include <sourcemod>
 
+#pragma semicolon 1
+#pragma newdecls required
+
 bool g_bFullyConnected;
 
 Database g_hDatabase = null;
+
+ConVar chatlog_clearTable;
+ConVar chatlog_clearTableDuration;
 
 public Plugin myinfo = {
 	name		= "Chat Log",
 	author		= "venus",
 	description	= "Save all user messages in database",
-	version		= "1.0",
+	version		= "1.1",
 	url			= "https://github.com/ivenuss"
 };
+
+public void OnPluginStart()
+{
+	chatlog_clearTable = CreateConVar("sm_chatlog_cleartable_enabled", "1", "Enable/Disable clearing table (1/0)", 0, true, 0.0, true, 1.0);
+	chatlog_clearTableDuration = CreateConVar("sm_chatlog_cleartable_duration", "1 MONTH", "How often will table restart\n(TIME FUNCTIONS: https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html)");
+
+	AutoExecConfig(true, "chatlog");
+}
 
 public void OnConfigsExecuted()
 {
@@ -63,7 +77,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 		{
 			int iMsgStyle;
 			int iTimeTmp = GetTime();
-			char szQuery[512], szTime[512], szMap[128], szSteamID[21];
+			char szQuery[512], szTime[512], szMap[128], szSteamID[21], szTimeFunction[64];
 
 			if (StrContains(command, "_", false) != -1)
 			{
@@ -77,6 +91,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 
 			FormatTime(szTime, sizeof(szTime), "%Y-%m-%d %T", iTimeTmp);
 			GetCurrentMap(szMap, sizeof(szMap));
+			
 
 			if(!GetClientAuthId(client, AuthId_Steam2, szSteamID, sizeof(szSteamID)))
 			{
@@ -85,8 +100,15 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 			}
 
 			g_hDatabase.Format(szQuery, sizeof(szQuery), "INSERT INTO chat_log (date, map, steamid, name, message_style, message) VALUES ('%s', '%s', '%s', '%N', '%d', '%s')", szTime, szMap, szSteamID, client, iMsgStyle, szArgs);
-			
 			g_hDatabase.Query(SQL_Error, szQuery);
+
+			GetConVarString(chatlog_clearTableDuration, szTimeFunction, sizeof(szTimeFunction));
+
+			if (GetConVarBool(chatlog_clearTable))
+			{
+				g_hDatabase.Format(szQuery, sizeof(szQuery), "DELETE FROM chat_log WHERE date < DATE_SUB(NOW(), INTERVAL %s)", szTimeFunction);
+				g_hDatabase.Query(SQL_Error, szQuery);
+			}
 		}
 	}
 }
