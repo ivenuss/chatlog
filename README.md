@@ -41,5 +41,11 @@ $password = "";
 $dbname = "";
 ```
 
+## ConVars
+```sh
+sm_chatlog_cleartable_enabled "1" //Enable/Disable clearing table (1/0) 0 - disabled
+sm_chatlog_cleartable_duration "1 MONTH" //How often will table restart
+```
+
 ## Note
 Please, keep in mind I am not webdev and this is my second work with web development, so bugs may appear.
