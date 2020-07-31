@@ -55,7 +55,7 @@ public void SQL_Connection(Database database, const char[] error, int data)
 			`message` VARCHAR(126) NOT NULL COLLATE 'utf8_general_ci', \
 			PRIMARY KEY (`id`) USING BTREE \
 		) \
-		DEFAULT CHARSET='utf8' \
+		DEFAULT CHARSET='utf8mb4' \
 		ENGINE=InnoDB \
 		;");
 	}
