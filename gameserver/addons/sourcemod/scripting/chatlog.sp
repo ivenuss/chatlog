@@ -48,11 +48,11 @@ public void SQL_Connection(Database database, const char[] error, int data)
 		CREATE TABLE IF NOT EXISTs`chat_log` ( \
 			`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT, \
 			`date` DATETIME NULL DEFAULT NULL, \
-			`map` VARCHAR(128) NOT NULL COLLATE 'utf8_general_ci', \
-			`steamid` VARCHAR(21) NOT NULL COLLATE 'utf8_general_ci', \
-			`name` VARCHAR(128) NOT NULL COLLATE 'utf8_general_ci', \
+			`map` VARCHAR(128) NOT NULL COLLATE 'utf8mb4_general_ci', \
+			`steamid` VARCHAR(21) NOT NULL COLLATE 'utf8mb4_general_ci', \
+			`name` VARCHAR(128) NOT NULL COLLATE 'utf8mb4_general_ci', \
 			`message_style` TINYINT(2) NULL DEFAULT 0, \
-			`message` VARCHAR(126) NOT NULL COLLATE 'utf8_general_ci', \
+			`message` VARCHAR(126) NOT NULL COLLATE 'utf8mb4_general_ci', \
 			PRIMARY KEY (`id`) USING BTREE \
 		) \
 		DEFAULT CHARSET='utf8mb4' \
